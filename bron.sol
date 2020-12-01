@@ -1,3 +1,5 @@
+// officially submitted to etherscan for verifcation after presale
+
 pragma solidity 0.5.16;
 
 contract Context {
