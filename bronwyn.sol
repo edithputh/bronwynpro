@@ -1,5 +1,5 @@
 /**
- *Submitted for verification at Etherscan.io on 2020-12
+
 */
 
 pragma solidity 0.5.16;
@@ -1325,36 +1325,7 @@ contract PositiveToken is ERC20,Ownable  {
     
   }
 
-  function sell(uint256 selltokens) external payable {
-    require(Initialize == true, "BRONWYN: Initialize is false");
-    require(selltokens > 0, "BRONWYN: sell tokens is zero");
-    require(selltokens < 1000, "BRONWYN: can't sell more than 999");
 
-    
-    
-    
-    
- 
-    uint256 _burnFeeAmount = (_burnFee*selltokens)/100;
-    selltokens = selltokens - _burnFeeAmount;
-    _burn(msg.sender, selltokens);
-    uint256 _100_precent = 100;
-    uint256 _part_us = _100_precent.sub(_Cg);
-    bytes16 _part_mul_us = ABDKMathQuad.div( ABDKMathQuad.fromUInt(_part_us),ABDKMathQuad.fromUInt(100) ); 
-    bytes16 _us_sub_tmp = ABDKMathQuad.mul(_part_mul_us,ABDKMathQuad.fromUInt(selltokens));
-    bytes16 _us_sub = ABDKMathQuad.mul(_us_sub_tmp,_price);
-    uint256 _withdraw =  ABDKMathQuad.toUInt(_us_sub);
-    _bank = _bank.sub(_withdraw);
-    _tokens = _tokens.sub(selltokens);
-
-    _price = ABDKMathQuad.div( ABDKMathQuad.fromUInt(_bank),ABDKMathQuad.fromUInt(_tokens));
-    bytes16 uint_price = ABDKMathQuad.mul(_price,PRICE_DECIMALS); // float price * 10**18  
-    
-
-    emit Price(_tokens,ABDKMathQuad.toUInt(uint_price));
-
-    msg.sender.transfer(_withdraw);
-  }
 
 }
 
@@ -1365,12 +1336,7 @@ contract BRONWYN is PositiveToken {
       _symbol = "BRON";
       _decimals = 18;
       _price = ABDKMathQuad.div ( ABDKMathQuad.fromUInt(34), ABDKMathQuad.fromUInt(10000) ); // 0.0034
-      _C  = 20; 
-      _Cr = 5; 
-      _Ca = 5; 
-      _Cg = _C.sub(_Cr.add(_Ca));
-    
-      _Cg = _Cg.div(2);
+     
       
       uint256 t = 10**18;
       PRICE_DECIMALS = ABDKMathQuad.fromUInt(t);
