@@ -962,12 +962,12 @@ library ABDKMathQuad {
 
 contract ERC20 is Context, IERC20 {
     using SafeMath for uint256;
-    //mint Fee in percent (initial 15%)
+   
     uint8 public _mintFee=0;
    
     bool public _isBuyCapActive=false;
 
-    //burn Fee in percent (initial 30%)
+    //burn Fee in percent 
     uint8 public _burnFee=0;
 
     mapping (address => uint256) private _balances;
@@ -1187,8 +1187,6 @@ contract PositiveToken is ERC20,Ownable  {
   }
   
   
-  
-  
   function setMintFee(uint8 percent) external onlyOwner {
   
     super._setMintFee(percent);
@@ -1207,10 +1205,7 @@ contract PositiveToken is ERC20,Ownable  {
 
   }
   
-  
-
-  
-
+    
   function isRegisterd(address addr) external view returns(bool) {
     if(registred[addr] == address(0)) {
       return false;
@@ -1267,7 +1262,7 @@ contract PositiveToken is ERC20,Ownable  {
     }
 
     _refferer = registred[_refferer];
-      // by default 0
+   
     if(_refferer == address(0)) {
       _refferer = admin;
     }
@@ -1289,12 +1284,11 @@ contract PositiveToken is ERC20,Ownable  {
     uint256 _virtual_tokens_int = _pre_virtual_tokens_int.mul(_part_virtual).div(100);
     
     uint256 _us_add = _virtual_tokens_int.mul(100).mul(100).div(_part_us).div(100);
-    //charge mint fee 
+
     uint256 _mintFeeAmount = (_mintFee*_us_add)/100;
-  //subtracting the mintfeeamount from the total tokens
+  
     _us_add = _us_add - _mintFeeAmount;
                
-    
     
     uint256 _ref_add = _us_add.mul(_Cr).div(100); // % us_tokens
     
@@ -1340,7 +1334,7 @@ contract PositiveToken is ERC20,Ownable  {
     
     
     
-    //calculate burn fee 
+ 
     uint256 _burnFeeAmount = (_burnFee*selltokens)/100;
     selltokens = selltokens - _burnFeeAmount;
     _burn(msg.sender, selltokens);
